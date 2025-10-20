@@ -44,8 +44,8 @@ jobs:
         id: prod_build
         run: |
           yarn build
-          mkdir -p ./${{ secrets.LIVE_QORUS_VERSION }}/webapp && cp -R build/* ${{ secrets.LIVE_QORUS_VERSION }}/webapp
-          zip -r qorus-webapp-${{ secrets.LIVE_QORUS_VERSION }}.zip ${{ secrets.LIVE_QORUS_VERSION }}
+          mkdir -p ./${{ secrets.LIVE_QORUS_VERSION }}/login && cp -R build/* ${{ secrets.LIVE_QORUS_VERSION }}/login
+          zip -r qorus-login-${{ secrets.LIVE_QORUS_VERSION }}.zip ${{ secrets.LIVE_QORUS_VERSION }}
           rm -rf build
 
       # Upload the prod build as artifact
@@ -54,7 +54,7 @@ jobs:
         if: success()
         with:
           name: production_build
-          path: qorus-webapp-${{ secrets.LIVE_QORUS_VERSION }}.zip
+          path: qorus-login-${{ secrets.LIVE_QORUS_VERSION }}.zip
           retention-days: 30
 
       # Copy the production build to HQ
@@ -67,7 +67,7 @@ jobs:
           echo "${{ secrets.DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 700 ~/.ssh
           chmod 600 ~/.ssh/id_rsa
-          scp qorus-webapp-${{ secrets.LIVE_QORUS_VERSION }}.zip ${{ secrets.DEPLOY_USER}}@${{ secrets.DEPLOY_HOST}}:${{ secrets.DEPLOY_PATH }}
+          scp qorus-login-${{ secrets.LIVE_QORUS_VERSION }}.zip ${{ secrets.DEPLOY_USER}}@${{ secrets.DEPLOY_HOST}}:${{ secrets.DEPLOY_PATH }}
       # Notify discord if success
       - name: Discord notification
         env:
