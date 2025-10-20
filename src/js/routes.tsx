@@ -32,12 +32,6 @@ class AppInfo extends React.Component {
     //
   }
 
-  logout = (nextState, replace) => {
-    const { logout } = this.props;
-
-    logout(replace);
-  };
-
   render() {
     // @ts-ignore ts-migrate(2339) FIXME: Property 'plugins' does not exist on type '{ info:... Remove this comment to see the full error message
     let { info, oauth2_enabled } = this.props;
@@ -52,11 +46,13 @@ class AppInfo extends React.Component {
     }
 
     return (
-      <Router {...this.props.routerProps}>
-        <Route path="/login" component={Login} />
+      <Router
+        {...this.props.routerProps}
+        basename={process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : ''}
+      >
+        <Route path="/" component={Login} />
         <Route path="/error" component={ErrorView} />
-        <Route path="/logout" onEnter={this.logout} />
-        <Redirect from="*" to="/login" />
+        <Redirect from="*" to="/" />
       </Router>
     );
   }

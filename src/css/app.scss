@@ -40,8 +40,6 @@ $blue4: lighten($qore-cobalt, 10);
 $blue5: lighten($qore-cobalt, 20);
 
 @import '../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
-@import '../../node_modules/prismjs/themes/prism-okaidia';
-@import '../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 $status-automatic: $qore-purple;
 $status-complete: $qore-green;
