@@ -135,7 +135,6 @@ function getRestHeaders(yaml) {
  */
 function checkResponse(res, currentPath, redirectOnError = true, notificationId) {
   const pathname = window.location.pathname + encodeURIComponent(window.location.search);
-  console.log(currentPath, window.location.pathname);
   if (res.status === 401 && currentPath === window.location.pathname) {
     window.localStorage.removeItem('token');
     window.location.href = `/login?next=${pathname}`;
