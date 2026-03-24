@@ -112,6 +112,7 @@ Props) => (
               width={400}
             />
           </ReqoreControlGroup>
+          <button type="submit" style={{ display: 'none' }} />
         </form>
       </ReqorePanel>
     </ReqoreLayoutContent>
