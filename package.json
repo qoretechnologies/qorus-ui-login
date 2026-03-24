@@ -1,36 +1,26 @@
 {
-  "name": "qorus-ui",
+  "name": "qorus-ui-login",
   "version": "2.0.12",
-  "description": "Qorus UI",
+  "description": "Qorus UI Login Web App",
   "author": "Qore Technologies",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qoretechnologies/qorus-ui.git"
+    "url": "git+https://github.com/qoretechnologies/qorus-ui-login.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/qoretechnologies/qorus-ui/issues"
+    "url": "https://github.com/qoretechnologies/qorus-ui-login/issues"
   },
   "private": false,
   "dependencies": {
     "@blueprintjs/core": "3.36",
     "@blueprintjs/datetime": "^3.15.2",
     "@blueprintjs/select": "^3.11.2",
-    "@monaco-editor/react": "^4.5.2",
-    "@qoretechnologies/reqore": "^0.38.6",
-    "@types/jest": "^27.0.1",
-    "@types/lodash": "^4.14.197",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.37",
-    "@types/react-dom": "^18.0.11",
+    "@qoretechnologies/reqore": "^0.55.5",
     "buffer": "^6.0.3",
-    "chart.js": "^2.7.3",
     "classnames": "^2.2.5",
-    "craco": "^0.0.3",
     "cronstrue": "^1.83.0",
     "epoch-timeago": "^1.1.9",
-    "fs": "^0.0.1-security",
-    "js-yaml": "^3.6.0",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.11",
     "million": "^2.5.10",
@@ -38,7 +28,6 @@
     "normalize.css": "^8.0.0",
     "path": "^0.12.7",
     "polished": "^4.2.2",
-    "prismjs": "^1.28.0",
     "process": "^0.11.10",
     "prop-types": "^15.6.2",
     "qs": "^6.6.0",
@@ -66,28 +55,19 @@
     "redux-form": "^5.3.1",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "remove-markdown": "^0.5.0",
     "reselect": "^4.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "shortid": "^2.2.6",
     "styled-components": "^5.0.0",
-    "thenby": "^1.2.0",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0",
     "zustand": "^5.0.8"
   },
   "scripts": {
     "start": "REACT_APP_API_PORT=8092 REACT_APP_API_HOST=hq.qoretechnologies.com HTTPS=true craco start",
     "start:http": "REACT_APP_API_PORT=8091 REACT_APP_API_HOST=hq.qoretechnologies.com REACT_APP_PROTO=http HTTPS=false PORT=3001 craco start",
     "start:ci": "REACT_APP_API_HOST=sandbox.qoretechnologies.com HTTPS=true craco start",
-    "codegen": "npx playwright codegen --ignore-https-errors --load-storage=codegen-auth.json https://localhost:3000",
     "build:pr": "./node_modules/.bin/dotenv -e .env.pull_request craco build",
     "build:dev": "./node_modules/.bin/dotenv -e .env.development craco build",
     "build": "./node_modules/.bin/dotenv -e .env.production craco build",
-    "setup-test": "npx playwright install --with-deps",
-    "test": "TEST_USER=ui-test TEST_USER_PASS=sojcaf-4gitta-teGfyg yarn playwright test tests/sanity.spec.ts",
-    "test:ci": "yarn playwright test tests/sanity.spec.ts",
-    "test:http": "yarn playwright test --config=./playwright-http.config.ts tests/http.spec.ts",
     "update-reqore": "yarn add @qoretechnologies/reqore@beta"
   },
   "eslintConfig": {
@@ -116,9 +96,16 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/lodash": "^4.14.197",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "craco": "^0.0.3",
     "dotenv-cli": "^6.0.0",
     "sass": "^1.49.9",
-    "ts-migrate": "^0.1.28"
+    "ts-migrate": "^0.1.28",
+    "typescript": "^4.4.2"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

@@ -1,18 +1,20 @@
 // @flow
-import { FormGroup, Icon, InputGroup } from '@blueprintjs/core';
-import React from 'react';
+import {
+  ReqoreControlGroup,
+  ReqoreInput,
+  ReqoreLayoutContent,
+  ReqoreMessage,
+  ReqoreP,
+  ReqorePanel,
+  ReqoreUIProvider,
+} from '@qoretechnologies/reqore';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import pure from 'recompose/onlyUpdateForKeys';
 import withHandlers from 'recompose/withHandlers';
 import withState from 'recompose/withState';
 import elementsLogo from '../../../img/elements.png';
-import logo from '../../../img/qorus_engine_logo.png';
-import Flex from '../../components/Flex';
-import Alert from '../../components/alert';
-import Box from '../../components/box';
-import { Control as Button, Controls as ButtonGroup } from '../../components/controls';
-import SystemInfo from '../../containers/system_info';
+import logo from '../../../img/qorus_engine_logo_white.png';
 import titleManager from '../../hocomponents/TitleManager';
 import settings from '../../settings';
 import { post } from '../../store/api/utils';
@@ -20,7 +22,7 @@ import { post } from '../../store/api/utils';
 type Props = {
   location: any;
   info: any;
-  handleFormSubmit: Function;
+  handleFormSubmit: () => void;
   loginStatus: any;
   handleUsernameChange: Function;
   handlePasswordChange: Function;
@@ -41,94 +43,79 @@ const Login: Function = ({
   password,
 }: // @ts-ignore ts-migrate(2724) FIXME: 'React' has no exported member named 'Element'. Di... Remove this comment to see the full error message
 Props) => (
-  <div
-    className="root"
-    style={{
-      background: `url(${elementsLogo})`,
-      backgroundPosition: 'bottom right',
-      backgroundRepeat: 'no-repeat',
-    }}
+  <ReqoreUIProvider
+    theme={{ main: '#111111', intents: { success: '#4a7110' } }}
+    options={{ animations: { buttons: false } }}
   >
-    <Flex style={{ justifyContent: 'center', alignItems: 'center' }}>
+    <ReqoreLayoutContent
+      style={{
+        background: `url(${elementsLogo})`,
+        backgroundPosition: 'bottom right',
+        backgroundRepeat: 'no-repeat',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <img src={logo} style={{ width: 400 }} />
-      {/* @ts-ignore ts-migrate(2322) FIXME: Type 'Function' is not assignable to type 'FormEve... Remove this comment to see the full error message */}
-      <form onSubmit={handleFormSubmit}>
-        <Box top noPadding width={400}>
-          <Flex
-            flex="0 1 auto"
-            flexFlow="row"
-            style={{ justifyContent: 'space-between' }}
-            className="authorize-header"
-          >
-            <span>
-              <Icon icon="log-in" />
-              Log in to {info['instance-key']}
-            </span>
-            <span style={{ color: '#aaa' }}>{info['omq-version']}</span>
-          </Flex>
-          <Flex flex="10 1 auto" className="authorize-content">
-            {hasLogout && (
-              <React.Fragment>
-                <Alert bsStyle="success">You have been successfuly logged out</Alert>
-                <br />
-              </React.Fragment>
-            )}
-            {hasNext && (
-              <React.Fragment>
-                <Alert bsStyle="info">Log in to access {hasNext}</Alert>
-                <br />
-              </React.Fragment>
-            )}
-            {error && (
-              <React.Fragment>
-                <Alert bsStyle="danger">{error}</Alert>
-                <br />
-              </React.Fragment>
-            )}
-            {/* @ts-ignore ts-migrate(2322) FIXME: Type '{ children: Element; label: string; labelFor... Remove this comment to see the full error message */}
-            <FormGroup label="Username" labelFor="username" required={true}>
-              <InputGroup
-                id="username"
-                placeholder="Username"
-                required={true}
-                disabled={loading}
-                // @ts-ignore ts-migrate(2322) FIXME: Type 'Function' is not assignable to type 'FormEve... Remove this comment to see the full error message
-                onChange={handleUsernameChange}
-                value={username}
-              />
-            </FormGroup>
-            {/* @ts-ignore ts-migrate(2322) FIXME: Type '{ children: Element; label: string; labelFor... Remove this comment to see the full error message */}
-            <FormGroup label="Password" labelFor="password" required={true}>
-              <InputGroup
-                required={true}
-                id="password"
-                placeholder="Password"
-                type="password"
-                disabled={loading}
-                // @ts-ignore ts-migrate(2322) FIXME: Type 'Function' is not assignable to type 'FormEve... Remove this comment to see the full error message
-                onChange={handlePasswordChange}
-                value={password}
-              />
-            </FormGroup>
-          </Flex>
-          <Flex flex="0 1 auto" className="authorize-footer">
-            <ButtonGroup className="bp3-fill" style={{ lineHeight: '30px' }}>
-              <Button
-                id="submit"
-                text="Log in"
-                icon="small-tick"
-                btnStyle={!loading && 'success'}
-                loading={loading}
-                type="submit"
-                big
-              />
-            </ButtonGroup>
-          </Flex>
-        </Box>
-      </form>
-    </Flex>
-    <SystemInfo info={info} />
-  </div>
+      <ReqorePanel
+        minimal
+        contentEffect={{
+          gradient: { colors: { 100: '#000000', 0: '#230b27' }, direction: 'to right bottom' },
+        }}
+        bottomActions={[
+          {
+            icon: 'CheckLine',
+            label: 'Submit',
+            intent: 'success',
+            onClick: handleFormSubmit,
+            fluid: true,
+            position: 'right',
+            loading,
+            minimal: true,
+          },
+        ]}
+      >
+        <form onSubmit={handleFormSubmit}>
+          {hasLogout && (
+            <ReqoreMessage intent="success" opaque={false} margin="bottom">
+              You have been successfuly logged out
+            </ReqoreMessage>
+          )}
+          {hasNext && (
+            <ReqoreMessage intent="info" opaque={false} margin="bottom">
+              Log in to access {hasNext}
+            </ReqoreMessage>
+          )}
+          {error && (
+            <ReqoreMessage intent="danger" opaque={false} margin="bottom">
+              {error}
+            </ReqoreMessage>
+          )}
+          <ReqoreControlGroup vertical fluid>
+            <ReqoreP>Username</ReqoreP>
+            <ReqoreInput
+              id="username"
+              required={true}
+              focusRules={{ type: 'auto' }}
+              disabled={loading}
+              onChange={handleUsernameChange}
+              value={username}
+              width={400}
+            />
+            <ReqoreP>Password</ReqoreP>
+            <ReqoreInput
+              id="password"
+              type="password"
+              disabled={loading}
+              onChange={handlePasswordChange}
+              value={password}
+              width={400}
+            />
+          </ReqoreControlGroup>
+        </form>
+      </ReqorePanel>
+    </ReqoreLayoutContent>
+  </ReqoreUIProvider>
 );
 
 export default compose(
@@ -157,7 +144,7 @@ export default compose(
       ({ username, password, changeLoginStatus, location }): Function =>
       // @ts-ignore ts-migrate(1055) FIXME: Type 'void' is not a valid async function return t... Remove this comment to see the full error message
       async (e: any): void => {
-        e.preventDefault();
+        e?.preventDefault();
 
         changeLoginStatus((loginStatus) => ({
           ...loginStatus,
